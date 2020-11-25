@@ -1,10 +1,11 @@
 import requests
+from datetime import datetime
 
 user = {
   "username": "lanatest",
   "firstName": "Lana",
   "lastName": "Test",
-  "email": "test112410@example.com",
+  "email": f'test+{datetime.now().strftime("%m%d%Y%H%M%S")}@example.com',
   "password": "Password123!"
 }
 
@@ -16,19 +17,22 @@ print(response.content)
 print(f'Duration: {response.elapsed.total_seconds()} sec')
 print(response.json())
 print(response.json()['id'])
+id = response.json()['id']
 
 # POST /login
 response = requests.post(url='https://playground.learnqa.ru/ajax/api/user/login',
-                         data={'username': 'lanatest', 'password': 'Password123!'})
+                         data={'email': user['email'], 'password': 'Password123!'})
 print(response.status_code)
 print(response.headers)
-print(response.headers['X-CSRF-TOKEN'])
+print(response.headers['x-csrf-token'])
 print(response.cookies.get('auth_sid'))
 
 # GET /user/id
-response = requests.get(url='https://playground.learnqa.ru/ajax/api/user/3',
-                        # TODO headers = {'x-csrf-token': c, 'X-Session-Id': t},
-                        data={'username': 'lanatest', 'password': 'Password123!'})
+response = requests.get(url='https://playground.learnqa.ru/ajax/api/user/' + id,
+                        headers={'x-csrf-token': response.headers['x-csrf-token']},
+                        cookies={'auth_sid': response.cookies.get('auth_sid')},
+                        data={'email': user['email'], 'password': 'Password123!'})
 print(response.status_code)
-print(response.headers)
-print(response.json())
+if response.status_code == 200:
+    print(response.headers)
+    print(response.json())
