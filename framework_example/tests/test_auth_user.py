@@ -18,7 +18,7 @@ class TestCreateUser(BaseCase):
         AssertionsHelper.assert_response_not_has_cookie(response, 'auth_sid')
         AssertionsHelper.assert_response_not_has_headers(response, "x-csrf-token")
 
-    def test_get_auth_data(self):
+    def test_auth_successfully(self):
         data = {
             'email': 'vinkotov@example.com',
             'password': '123'
