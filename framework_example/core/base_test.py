@@ -10,7 +10,6 @@ class BaseCase:
 
     def teardown(self):
         Logger.get_instance().write_log_to_file()
-        Logger.get_instance().clear_data()
 
     @staticmethod
     def get_cookie(response: Response, cookie_name):

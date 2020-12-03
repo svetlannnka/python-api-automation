@@ -58,3 +58,4 @@ class Logger:
             logger_file.write(f"START TEST {testname}\n")
             logger_file.write(self.data)
             logger_file.write(f"\nEND TEST {testname}\n\n")
+            self.clear_data()

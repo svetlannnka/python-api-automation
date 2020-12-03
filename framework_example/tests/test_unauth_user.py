@@ -7,14 +7,19 @@ from framework_example.core.assertions_helper import AssertionsHelper
 
 
 class TestUnauthUser(BaseCase):
+    users_provider = [
+        ("1", "Lana"),
+        ("2", "Vinkotov")
+    ]
+
     def test_get_user_without_id(self):
         response = Request.get('user')
         AssertionsHelper.assert_code_status(response, 400)
         AssertionsHelper.assert_response_text(response, "Wrong HTTP method")
 
-    @pytest.mark.parametrize('id, name', [("1", "Lana"), ("2", "Vinkotov")])
-    def test_get_user_with_id(self, id: str, name: str):
-        response = Request.get(f'user/{id}')
+    @pytest.mark.parametrize('user_id, name', users_provider)
+    def test_get_user_with_id(self, user_id: str, name: str):
+        response = Request.get(f'user/{user_id}')
         AssertionsHelper.assert_code_status(response, 200)
         AssertionsHelper.assert_json_value_by_key(response, "username", name)
         AssertionsHelper.assert_json_has_no_key(response, "firstName")
