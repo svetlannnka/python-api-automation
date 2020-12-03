@@ -26,7 +26,7 @@ class Logger:
         data_to_add += f"[{str(datetime.datetime.now())}] Request data: {data}\n"
         data_to_add += f"[{str(datetime.datetime.now())}] Request headers: {headers}\n"
         data_to_add += f"[{str(datetime.datetime.now())}] Request cookies: {cookies}"
-        data_to_add += "\n-----\n"
+        data_to_add += "\n"
 
         self.data += data_to_add
 
@@ -34,7 +34,7 @@ class Logger:
         cookies_as_dict = dict(response.cookies)
         headers_as_dict = dict(response.headers)
 
-        data_to_add = f"\n-----\n"
+        data_to_add = f"\n"
         data_to_add += f"[{str(datetime.datetime.now())}] Response code: {response.status_code}\n"
         data_to_add += f"[{str(datetime.datetime.now())}] Response text: {response.text}\n"
         data_to_add += f"[{str(datetime.datetime.now())}] Response headers: {headers_as_dict}\n"
