@@ -18,7 +18,7 @@ class Request:
 
     @staticmethod
     def _send(url: str, data: dict, headers: dict, cookies: dict, method: str):
-        url = ENV.base_url() + url
+        url = f"{ENV.base_url()}{url}"
 
         if headers is None:
             headers = {}
@@ -33,8 +33,10 @@ class Request:
 
         if method == 'get':
             response = requests.get(url, params=data, headers=headers, cookies=cookies)
-        elif method == 'post' or method == 'put':
+        elif method == 'post':
             response = requests.post(url, data=data, headers=headers, cookies=cookies)
+        elif method == 'put':
+            response = requests.put(url, data=data, headers=headers, cookies=cookies)
         else:
             raise Exception(f'Bad HTTP method "{method}" was received')
 
