@@ -16,7 +16,14 @@ class BaseCase:
         if cookie_name in response.cookies:
             return {cookie_name: response.cookies[cookie_name]}
         else:
-            raise Exception(f"Cannot get cookie with name {cookie_name} from the last response")
+            raise Exception(f"Cannot find cookie with the name {cookie_name} in the last response")
+
+    @staticmethod
+    def get_header(response: Response, headers_name):
+        if headers_name in response.headers:
+            return {headers_name: response.headers[headers_name]}
+        else:
+            raise Exception(f"Cannot find header with the name {headers_name} in the last response")
 
     @staticmethod
     def base_url() -> str:

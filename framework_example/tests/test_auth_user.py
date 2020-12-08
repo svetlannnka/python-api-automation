@@ -26,9 +26,33 @@ class TestCreateUser(BaseCase):
 
         response = Request.post('user/login', data)
         AssertionsHelper.assert_code_status(response, 200)
-        AssertionsHelper.assert_response_text(response, "")
         AssertionsHelper.assert_response_has_cookie(response, 'auth_sid')
         AssertionsHelper.assert_response_has_headers(response, "x-csrf-token")
+
+    def test_get_user_with_id(self):
+        data = {
+            'email': 'vinkotov@example.com',
+            'password': '123'
+        }
+
+        response = Request.post('user/login', data)
+
+        AssertionsHelper.assert_response_has_cookie(response, 'auth_sid')
+        AssertionsHelper.assert_response_has_headers(response, "x-csrf-token")
+        AssertionsHelper.assert_json_has_key(response, 'user_id')
+
+        auth_cookie = self.get_cookie(response, 'auth_sid')
+        auth_header = self.get_header(response, 'x-csrf-token')
+        user_id = response.json()['user_id']
+
+        response = Request.get(f'user/{user_id}', headers=auth_header, cookies=auth_cookie)
+
+        AssertionsHelper.assert_code_status(response, 200)
+        AssertionsHelper.assert_json_has_key(response, 'firstName')
+        AssertionsHelper.assert_json_has_key(response, 'lastName')
+        AssertionsHelper.assert_json_has_key(response, 'email')
+
+
 
 
 

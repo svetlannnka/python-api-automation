@@ -75,5 +75,5 @@ class TestCreateUser(BaseCase):
 
         response = Request.post('user', data)
         AssertionsHelper.assert_code_status(response, 200)
-        AssertionsHelper.assert_json_has_key(response, "user_id")
+        AssertionsHelper.assert_json_has_key(response, "id")
 
