@@ -1,16 +1,29 @@
 import datetime
 import os
+import allure
+import logging
 from requests import Response
 
 
 class Logger:
     instance = None
+    logger = None
     path = "logger.log"
     data = ""
 
     def __init__(self):
         if os.path.exists(self.path):
             os.remove(self.path)
+
+        self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(logging.DEBUG)
+
+        handler = logging.FileHandler(self.path)
+        handler.setLevel(logging.DEBUG)
+
+        formatter = logging.Formatter()
+        handler.setFormatter(formatter)
+        self.logger.addHandler(handler)
 
     @classmethod
     def get_instance(cls):
@@ -19,6 +32,7 @@ class Logger:
 
         return cls.instance
 
+    @allure.step("{method} request to {url}")
     def add_request(self, url: str, data: dict, headers: dict, cookies: dict, method: str):
         data_to_add = f"\n-----\n"
         data_to_add += f"[{str(datetime.datetime.now())}] Request method: {method}\n"
@@ -29,6 +43,7 @@ class Logger:
         data_to_add += "\n"
 
         self.data += data_to_add
+        self.logger.info(data_to_add)
 
     def add_response(self, response: Response):
         cookies_as_dict = dict(response.cookies)
@@ -42,6 +57,7 @@ class Logger:
         data_to_add += "\n-----\n"
 
         self.data += data_to_add
+        self.logger.info(data_to_add)
 
     def clear_data(self):
         self.data = ""
