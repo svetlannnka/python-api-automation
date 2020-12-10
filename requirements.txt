@@ -1,6 +1,4 @@
 allure-pytest
-jsonschema
 requests
 pytest
 pytest-xdist
-jsonref
