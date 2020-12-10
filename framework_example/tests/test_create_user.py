@@ -3,14 +3,14 @@
 from datetime import datetime
 from framework_example.core.base_test import BaseCase
 from framework_example.core.my_request import Request
-from framework_example.core.assertions_helper import AssertionsHelper
+from framework_example.core.asserts import Asserts
 
 
 class TestCreateUser(BaseCase):
     def test_not_enough_data(self):
         response = Request.post('user')
-        AssertionsHelper.assert_code_status(response, 400)
-        AssertionsHelper.assert_response_text(response, "The following required params are missed: email, password, "
+        Asserts.assert_code_status(response, 400)
+        Asserts.assert_response_text(response, "The following required params are missed: email, password, "
                                                         "username, firstName, lastName")
 
     def test_no_email(self):
@@ -22,8 +22,8 @@ class TestCreateUser(BaseCase):
         }
 
         response = Request.post('user', data)
-        AssertionsHelper.assert_code_status(response, 400)
-        AssertionsHelper.assert_response_text(response, "The following required params are missed: email")
+        Asserts.assert_code_status(response, 400)
+        Asserts.assert_response_text(response, "The following required params are missed: email")
 
     def test_email_is_already_in_system(self):
         data = {
@@ -35,8 +35,8 @@ class TestCreateUser(BaseCase):
         }
 
         response = Request.post('user', data)
-        AssertionsHelper.assert_code_status(response, 400)
-        AssertionsHelper.assert_response_text(response, f"Users with email '{data['email']}' already exists")
+        Asserts.assert_code_status(response, 400)
+        Asserts.assert_response_text(response, f"Users with email '{data['email']}' already exists")
 
     def test_email_is_not_valid(self):
         data = {
@@ -48,8 +48,8 @@ class TestCreateUser(BaseCase):
         }
 
         response = Request.post('user', data)
-        AssertionsHelper.assert_code_status(response, 400)
-        AssertionsHelper.assert_response_text(response, "Invalid email format")
+        Asserts.assert_code_status(response, 400)
+        Asserts.assert_response_text(response, "Invalid email format")
 
     def test_username_is_too_short(self):
         data = {
@@ -61,8 +61,8 @@ class TestCreateUser(BaseCase):
         }
 
         response = Request.post('user', data)
-        AssertionsHelper.assert_code_status(response, 400)
-        AssertionsHelper.assert_response_text(response, "The value of 'username' field is too short")
+        Asserts.assert_code_status(response, 400)
+        Asserts.assert_response_text(response, "The value of 'username' field is too short")
 
     def test_create_user_successfully(self):
         data = {
@@ -74,6 +74,6 @@ class TestCreateUser(BaseCase):
         }
 
         response = Request.post('user', data)
-        AssertionsHelper.assert_code_status(response, 200)
-        AssertionsHelper.assert_json_has_key(response, "id")
+        Asserts.assert_code_status(response, 200)
+        Asserts.assert_json_has_key(response, "id")
 

@@ -3,7 +3,11 @@ import json
 from requests import Response
 
 
-class AssertionsHelper:
+class Asserts:
+    @staticmethod
+    def assert_equals(val1, val2, error_massage: str):
+        assert val1 == val2, f"Failed assertion that {val1} is equals {val2}. {error_massage}"
+
     @staticmethod
     def assert_code_status(response: Response, expected_code: int, message: str = ""):
         assert response.status_code == expected_code, \
@@ -63,14 +67,14 @@ class AssertionsHelper:
         cookies = response.cookies
         assert name in cookies, \
             f'Cannot find cookie with name {name} in the response. All cookies in the response: ' \
-            + AssertionsHelper._get_cookies(response.cookies)
+            + Asserts._get_cookies(response.cookies)
 
     @staticmethod
     def assert_response_not_has_cookie(response: Response, name):
         cookies = response.cookies
         assert name not in cookies, \
             f'Found cookie with name {name} in the response which is not expected.' \
-            + AssertionsHelper._get_cookies(response.cookies)
+            + Asserts._get_cookies(response.cookies)
 
     @staticmethod
     def _get_cookies(cookie_jar):

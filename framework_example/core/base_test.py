@@ -1,4 +1,5 @@
 import allure
+from datetime import datetime
 from requests import Response
 from framework_example.environment import ENV
 from framework_example.core.logger import Logger
@@ -26,5 +27,5 @@ class BaseCase:
             raise Exception(f"Cannot find header with the name {headers_name} in the last response")
 
     @staticmethod
-    def base_url() -> str:
-        return ENV.base_url()
+    def create_unique_email(base: str, domain="example.com"):
+        return f'{base}+{datetime.now().strftime("%m%d%Y%H%M%S")}@{domain}'
