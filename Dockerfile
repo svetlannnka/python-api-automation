@@ -14,4 +14,4 @@ RUN pip install -r requirements.txt
 
 ENV ENVIRONMENT=dev
 
-CMD  python -m pytest --help
+CMD python -m pytest -s --alluredir=test_results/ framework_example/tests/

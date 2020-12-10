@@ -5,7 +5,7 @@ from requests import Response
 
 class Asserts:
     @staticmethod
-    def assert_equals(val1, val2, error_massage: str):
+    def assert_equals(val1, val2, error_massage: str = ""):
         assert val1 == val2, f"Failed assertion that {val1} is equals {val2}. {error_massage}"
 
     @staticmethod
@@ -75,6 +75,10 @@ class Asserts:
         assert name not in cookies, \
             f'Found cookie with name {name} in the response which is not expected.' \
             + Asserts._get_cookies(response.cookies)
+
+    @staticmethod
+    def assert_time_is_less_than(response: Response, max_time=1):
+        assert response.elapsed.total_seconds() <= max_time, "Request is too long."
 
     @staticmethod
     def _get_cookies(cookie_jar):

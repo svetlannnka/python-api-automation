@@ -1,6 +1,5 @@
 # python -m pytest -s --alluredir=test_results/ framework_example/tests/test_create_user.py
 
-from datetime import datetime
 from framework_example.core.base_test import BaseCase
 from framework_example.core.my_request import Request
 from framework_example.core.asserts import Asserts
@@ -53,7 +52,7 @@ class TestCreateUser(BaseCase):
 
     def test_username_is_too_short(self):
         data = {
-            'email': f'test+{datetime.now().strftime("%m%d%Y%H%M%S")}@example.com',
+            'email': self.create_unique_email('test'),
             'password': '123',
             'username': 'v',
             'firstName': 'Vitalii',
@@ -66,7 +65,7 @@ class TestCreateUser(BaseCase):
 
     def test_create_user_successfully(self):
         data = {
-            'email': f'test+{datetime.now().strftime("%m%d%Y%H%M%S")}@example.com',
+            'email': self.create_unique_email('test'),
             'password': '123',
             'username': 'vinkotov',
             'firstName': 'Vitalii',

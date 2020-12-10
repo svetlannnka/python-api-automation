@@ -1,7 +1,5 @@
-import allure
 from datetime import datetime
 from requests import Response
-from framework_example.environment import ENV
 from framework_example.core.logger import Logger
 
 

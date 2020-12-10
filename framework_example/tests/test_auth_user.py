@@ -1,6 +1,5 @@
 # python -m pytest -s --alluredir=test_results/ framework_example/tests/test_auth_user.py
 
-from datetime import datetime
 from framework_example.core.base_test import BaseCase
 from framework_example.core.my_request import Request
 from framework_example.core.asserts import Asserts
@@ -38,8 +37,6 @@ class TestCreateUser(BaseCase):
 
         response = Request.post('user/login', data)
 
-        Asserts.assert_response_has_cookie(response, 'auth_sid')
-        Asserts.assert_response_has_headers(response, "x-csrf-token")
         Asserts.assert_json_has_key(response, 'user_id')
 
         auth_cookie = self.get_cookie(response, 'auth_sid')
