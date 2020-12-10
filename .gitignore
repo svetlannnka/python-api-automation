@@ -130,3 +130,6 @@ dmypy.json
 
 # Project configuration files
 .idea/
+
+# Allure results
+test_results/
