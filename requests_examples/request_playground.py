@@ -1,23 +1,43 @@
 import requests
 from datetime import datetime
 
-from support.environment import ENV
+"""
+https://playground.learnqa.ru/ajax/api/map
+"""
 
-# TODO: examples of GET and basic API calls
+# example of GET and basic API call
+# response = requests.get(url='https://playground.learnqa.ru/ajax/api/hello')
+# print(response.status_code)
+# print(response.text)
+# print(response.headers)
+# print(response.headers['Date'])
 
+# example of POST and basic API calls
+# response = requests.post(url='https://playground.learnqa.ru/ajax/api/check_type')
+# print(response.status_code)
+# print(response.text)
 
-user = {
-  "username": "lanatest",
-  "firstName": "Lana",
-  "lastName": "Test",
-  "email": f'test+{datetime.now().strftime("%m%d%Y%H%M%S")}@example.com',
-  "password": "Password123!"
-}
+# example of JSON
+# response = requests.get(url='https://playground.learnqa.ru/ajax/api/get_json')
+# print(response.status_code)
+# print(response.json())
+# print(response.json()['name'])
+# print(response.json()['fname'])
 
-# Post /user
-r = requests.post(url="https://playground.learnqa.ru/ajax/api/user", data=user)
-print(r.status_code)
-print(r.json())
-print(r.headers)
+# example of a cookie
+# response = requests.get(url='https://playground.learnqa.ru/ajax/api/get_cookie')
+# print(response.status_code)
+# print(response.headers)
+# print(response.cookies.get('MyCookie'))
 
-url = f'{ENV.base_url()}/user'
+# example of POST with payload, POST /user
+# user = {
+#   "username": "lanatest",
+#   "firstName": "Lana",
+#   "lastName": "Test",
+#   "email": f'test+{datetime.now().strftime("%m%d%Y%H%M%S")}@example.com'
+# }
+#
+# response = requests.post(url="https://playground.learnqa.ru/ajax/api/user", data=user)
+# print(response.status_code)
+# print(response.text)

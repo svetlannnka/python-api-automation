@@ -26,20 +26,17 @@ class TestWithSetup:
     def test_login_user(self):
         response = requests.post(
             url='https://playground.learnqa.ru/ajax/api/user/login',
-            data={'username': self.created_user['username'], 'password': self.created_user['password']}
+            data={'email': self.created_user['email'], 'password': self.created_user['password']}
         )
         assert response.status_code == 200
         assert response.headers['x-csrf-token'] != ''
         assert response.cookies.get('auth_sid') != ''
 
-    def test_get_user(self):
+    def test_login_user_incorrect_pw(self):
         response = requests.post(
             url='https://playground.learnqa.ru/ajax/api/user/login',
-            data={'username': self.created_user['username'], 'password': self.created_user['password']}
+            data={'email': self.created_user['email'], 'password': 'Wrong Password123!'}
         )
-        # TODO: get headers
-        response = requests.get(
-            url=f'https://playground.learnqa.ru/ajax/api/user/{self.user_id}',
-            # TODO: add headers
-        )
-        assert response.status_code == 200
+        assert response.status_code == 400
+        assert 'x-csrf-token' not in response.headers
+        assert 'auth_sid' not in response.cookies.keys()
