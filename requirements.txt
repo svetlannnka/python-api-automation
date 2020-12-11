@@ -2,3 +2,5 @@ allure-pytest
 requests
 pytest
 pytest-xdist
+jsonref
+jsonschema
