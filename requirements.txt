@@ -4,3 +4,5 @@ jsonschema
 requests
 pytest
 pytest-xdist
+jsonref
+jsonschema
